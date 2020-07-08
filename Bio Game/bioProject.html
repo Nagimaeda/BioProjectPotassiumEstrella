@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Bio Project</title>
+		<meta charset="UTF-8"/>
+		<style>
+			table{
+				border-collapse: collapse;
+				margin: auto;
+			}
+			td{
+				border: 3px solid black;
+			}
+			h1, h2{
+				text-align: center;
+			}
+			button{
+				display: block;
+				margin: 15px auto;
+			}
+			img{
+				width: 80px;
+				height: 80px;
+				padding: 5px;
+				vertical-align: middle;
+			}
+			
+			.disappear{
+				opacity: 0;
+				transition: all 5s;
+			}
+			
+			.exist{
+				display:block;
+				opacity: 0;
+			}
+			.appear{
+				opacity 1;
+				transition: all 5s;
+			}
+			
+			.none{
+				display: none;
+			}
+			
+		</style>
+		<script>
+		</script>
+	</head>
+	<body>
+		<h1>Virus Killer</h1>
+		<h2> A short game by Jerome Estrella <h2>
+		<h1 id=gameover><h1>
+		<h2 class=none id=message>
+		When your immune system remembers the antigens from a disease, 
+		<br>it can activate the immune response much faster than the 
+		<br>first time it encountered the disease. This is how one can 
+		<br>become immune to a disease.
+		<br><br>The only way to get immunity from COVID-19 is through a vaccine 
+		<br>or surviving the disease. A vaccine is not yet available, 
+		<br>and it can take almost 2 weeks for the immune system to 
+		<br>defeat the SARS-CoV-2 virus; enough time for it to wreak 
+		<br>havoc in your body and maybe even kill you.
+		<br><br><em>You are not immune to COVID-19. 
+		<br>Stay home. Stay Safe.</em>
+		</h2>
+		<table id="board">
+			<tr>
+				<td ><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+			</tr>
+			<tr>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+			</tr>
+			<tr>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+			</tr>
+			<tr>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+			</tr>
+			<tr>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+				<td><img src=""></td>
+			</tr>
+		</table>
+		<button id="start">Start</button>
+		<h2>Score: <span id="score">0</span></h2>
+		<h2> Time Remaining: <span id="time">120</span></h2>
+		<h2> Memory from Memory Cells </h2>
+		<table>
+			<tr>
+				<td id=greenPow><img src=""></td>
+				<td id=bluePow><img src=""></td>
+				<td id=redPow><img src=""></td>
+				<td id=yellowPow><img src=""></td>
+				<td><img></td>
+			</tr>
+		</table>
+			
+	</body>
+	<script>
+/*
+			Write the script such that once the start button is clicked:
+				- the start button is disabled
+				- a random img display a random virus with random health points
+				- clicking on the virus decreases health by 1, killing virus increases score by 1
+				- a new virus appears every x seconds
+				- after 2 minutes, the viruses stop appearing
+			*/
+		alert("How to Play: \n When a virus appears, keep clicking on it until it disappears. \n You will receive an antigenin the memory for defeating a specific \n color virus for the first time. If you equip the antigen (by clicking it) \nwhen fighting the same color again, it will disappear faster. \n If all the slots have viruses, you lose. Reload to play again.");
+		var seven
+		var five
+		var three
+		var startTime
+		var startcovid
+		var score = 0
+		var equipped = undefined
+		var time = parseInt(document.getElementById("time").innerHTML)
+		function timer(){
+		document.getElementById("time").innerHTML = parseInt(document.getElementById("time").innerHTML) -1
+		time = parseInt(document.getElementById("time").innerHTML)
+		if (time == 100){
+			five = setInterval(infect, 5000)
+		}
+		if (time == 60){
+			three = setInterval(infect, 3000)
+		}
+		if (time == 30){
+			clearInterval(seven);
+			clearInterval(five);
+			clearInterval(three);
+			startcovid = setInterval(covid, 1000);
+			setTimeout(gameOver, 26000);
+		}
+		}
+		
+		function start(){
+			document.getElementById("start").disabled = true;
+			startTime = setInterval(timer,1000)
+			infect();
+			seven = setInterval(infect, 7000)
+		}
+		var rand 
+		var randColor
+		var virusHealth = [[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],[0,undefined],]
+		function infect(){
+			do{
+			rand = Math.floor(Math.random()*25)
+			}while(virusHealth[rand][0] > 0)
+			randColor = Math.floor(Math.random()*4)
+			if (randColor == 0){
+			document.getElementsByTagName("td")[rand].innerHTML = "<img src ='bluevirus.png'>"
+			}
+			if (randColor == 1){
+			document.getElementsByTagName("td")[rand].innerHTML = "<img src ='greenvirus.png'>"
+			}
+			if (randColor == 2){
+			document.getElementsByTagName("td")[rand].innerHTML = "<img src ='yellowvirus.png'>"
+			}
+			if (randColor == 3){
+			document.getElementsByTagName("td")[rand].innerHTML = "<img src ='redvirus.png'>"
+			}
+			virusHealth[rand][0] = 20;
+			virusHealth[rand][1] = randColor
+			}
+		
+		function cure(){
+			var i;
+			for (i = 0; i<document.getElementsByTagName("td").length-4;i++){
+				if (document.getElementsByTagName("td")[i] === this){
+				if(equipped == virusHealth[i][1]){
+				virusHealth[i][0] = virusHealth[i][0]-5
+				}else{
+				virusHealth[i][0] = virusHealth[i][0]-1}
+				break;
+				}
+			}
+			if (virusHealth[i][0] <=0){
+			
+			switch(virusHealth[i][1]){
+			case 0:
+				document.getElementById("bluePow").innerHTML = "<img onclick='equipBlue()' src='blueantigen.png'>";
+				score++;
+				virusHealth[i][1] = 5
+			break;
+			case 1:
+				document.getElementById("greenPow").innerHTML = "<img onclick='equipGreen()' src='greenantigen.png'>";
+				score++;
+				virusHealth[i][1] = 5
+			break;
+			
+			case 2:
+				document.getElementById("yellowPow").innerHTML = "<img onclick='equipYellow()' src='yellowantigen.png'>";
+				score++;
+				virusHealth[i][1] =5
+			break;
+			
+			case 3:
+				document.getElementById("redPow").innerHTML = "<img onclick='equipRed()' src='redantigen.png'>";
+				score++;
+				virusHealth[i][1] = 5
+			break;
+			}
+			this.innerHTML = "<img src=''>"
+			document.getElementById("score").innerHTML = score
+			}
+			
+		}
+		for (i = 0; i < document.getElementsByTagName("td").length-4; i++){
+			document.getElementsByTagName("td")[i].addEventListener("click", cure)
+		}
+		document.getElementById("start").addEventListener("click", start)
+		function equipBlue(){
+			for (i=25;i <document.getElementsByTagName("td").length;i++){
+				document.getElementsByTagName("td")[i].style.backgroundColor = "white"
+			}
+			document.getElementById("bluePow").style.backgroundColor = "black"
+			equipped = 0
+		}
+		function equipGreen(){
+			for (i=25;i <document.getElementsByTagName("td").length;i++){
+				document.getElementsByTagName("td")[i].style.backgroundColor = "white"
+			}
+			document.getElementById("greenPow").style.backgroundColor = "black"
+			equipped = 1
+		}
+		function equipYellow(){
+			for (i=25;i <document.getElementsByTagName("td").length;i++){
+				document.getElementsByTagName("td")[i].style.backgroundColor = "white"
+			}
+			document.getElementById("yellowPow").style.backgroundColor = "black"
+			equipped = 2
+		}
+		function equipRed(){
+			for (i=25;i <document.getElementsByTagName("td").length;i++){
+				document.getElementsByTagName("td")[i].style.backgroundColor = "white"
+			}
+			document.getElementById("redPow").style.backgroundColor = "black"
+			equipped = 3
+		}
+		function covid(){
+			do{
+			rand = Math.floor(Math.random()*25)
+			}while(virusHealth[rand][0] > 0)
+			
+			document.getElementsByTagName("td")[rand].innerHTML = "<img src ='covid.png'>";
+			virusHealth[rand][0] = 9999999999;
+			virusHealth[rand][1] = 4;
+		}
+		function gameOver(){
+			clearInterval(startcovid)
+			clearInterval(startTime)
+			document.getElementById("gameover").innerHTML = "GAME OVER"
+			document.getElementsByTagName("table")[0].classList.add("disappear")
+			setTimeout(message, 5000)
+		}
+		function message(){
+		document.getElementsByTagName("table")[0].classList.add("none")
+
+		document.getElementById("message").classList.remove("none")
+
+		document.getElementById("message").classList.add("appear")
+		}
+	</script>
+</html>
